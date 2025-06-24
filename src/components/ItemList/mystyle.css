@@ -1,0 +1,11 @@
+.item-list img{ 
+display: block;
+margin: 0 auto;
+width: 25%;
+}
+
+.item-list a{
+display: flex;
+justify-content: center;
+
+}
