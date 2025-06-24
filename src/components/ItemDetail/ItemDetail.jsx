@@ -1,27 +1,34 @@
+import { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import ItemCount from '../ItemCount/ItemCount';
+import { CartContext } from '../../Context/CartContext';
 
 const ItemDetail = ({ product }) => {
+    const { addToCart } = useContext(CartContext);
+    const [added, setAdded] = useState(false);
+
+const handleAdd = (qty) => {
+    addToCart(product, qty);
+    setAdded(true);
+};
+
 return (
-    <div className="item-detail" style={{ padding: '2rem', border: '1px solid #ccc', borderRadius: '10px', maxWidth: '500px', margin: '2rem auto', textAlign: 'center' }}>
-    {product.imagen && (
-        <img 
-        src={product.imagen} 
-        alt={product.nombre} 
-        style={{ width: '100%', height: 'auto', borderRadius: '10px' }} 
-        />
-    )}
+    <div className="item-detail" style={{ padding: '2rem', textAlign: 'center' }}>
+    <img src={product.imagen} alt={product.nombre} style={{ maxWidth: '300px', borderRadius: '10px' }} />
     <h2>{product.nombre}</h2>
     <p>{product.descripcion}</p>
     <p><strong>Precio:</strong> ${product.precio}</p>
-    <ItemCount stock={10} initial={1} />
+
+    {!added ? (
+        <ItemCount stock={10} initial={1} onAdd={handleAdd} />
+    ) : (
+        <div>
+        <p style={{ color: 'green' }}>✅ Producto agregado al carrito</p>
+        <Link to="/cart"><button>Ir al carrito</button></Link>
+        </div>
+    )}
     </div>
 );
 };
-
-const handleAdd = (cantidad) => {
-console.log(`Se agregaron ${cantidad} productos al carrito`);
-};
-
-<ItemCount stock={10} initial={1} onAdd={handleAdd} />
 
 export default ItemDetail;

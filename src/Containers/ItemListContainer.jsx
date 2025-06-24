@@ -8,18 +8,12 @@ const [items, setItems] = useState([]);
 const { categoryId } = useParams();
 
 useEffect(() => {
-const asyncFunction = async () => {
-    try {
-    const data = categoryId
-        ? await getProductsByCategory(categoryId)
-        : await getProducts();
+const fetchData = async () => {
+    const data = await getProductsFromFirestore();
     setItems(data);
-    } catch (error) {
-    console.error("Error cargando productos:", error);
-    }
 };
 
-asyncFunction();
+fetchData();
 }, [categoryId]);
 
 return (
