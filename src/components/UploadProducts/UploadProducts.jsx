@@ -7,7 +7,7 @@ const upload = async () => {
     const productosRef = collection(db, "Productos"); 
 
     for (let prod of productos) {
-      const { id, ...productData } = prod; // Excluye el id si lo hay
+    const { id, ...productData } = prod; 
 
     try {
         await addDoc(productosRef, productData);
